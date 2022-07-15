@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-export default function ListaEmpregados() {
+export default function ListarEmpregados() {
   return (
     <div>
       

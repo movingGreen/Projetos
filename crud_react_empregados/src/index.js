@@ -1,32 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import Formulario from './Formulario';
-import ListaEmpregados from './ListaEmpregados';
+import ListarEmpregados from './ListarEmpregados';
 import './index.css';
 
 class Tela extends React.Component { 
 
-  state = {
-    nome: "",
-  };
-
-  handleCallback = (dadosFormulario) =>{
-    this.setState({nome: dadosFormulario})
-  }
-  
   render() {
-    const {nome} = this.state;
     return (
       <React.StrictMode>
-        <Formulario parentCallback = {this.handleCallback}/>
+        <Formulario />
         <hr/>
-        <ListaEmpregados/>
-        {nome}
+        <ListarEmpregados/>
       </React.StrictMode>
     );
   }
 }
-
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<Tela />);

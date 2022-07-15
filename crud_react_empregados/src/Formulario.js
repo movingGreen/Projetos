@@ -1,12 +1,16 @@
 import React from 'react';
+import { useState } from 'react';
 
 
 export default class Formulario extends React.Component{
   
-  onTrigger = (event) => {
-    this.props.parentCallback(event.target.myname.value);
-    event.preventDefault();
-  }
+  private const [nome, setNome] = useState('');
+  const [idade, setIdade] = useState(0);
+  const [nacionalidade, setNacionalidade] = useState('');
+  const [posicao, setPosicao] = useState('');
+  const [salario, setSalario] = useState(0);
+
+  onTrigger = ;
   
   render() {  
     return (
