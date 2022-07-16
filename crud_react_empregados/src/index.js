@@ -10,7 +10,6 @@ class Tela extends React.Component {
     return (
       <React.StrictMode>
         <Formulario />
-        <hr/>
         <ListarEmpregados/>
       </React.StrictMode>
     );
