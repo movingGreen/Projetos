@@ -17,4 +17,4 @@ class Tela extends React.Component {
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<Tela />);
+root.render(Tela.render());
