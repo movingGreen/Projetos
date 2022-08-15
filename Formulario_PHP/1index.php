@@ -12,7 +12,7 @@
 </head>
 
 <body>
-  <form class="Formulario container-lg" method="post">
+  <form class="Formulario container" method="post">
     <div class="row">
       <label class="" for="nome">Nome do funcionário:</label>
       <input class="" type="text" id='nome' name="nome" />
