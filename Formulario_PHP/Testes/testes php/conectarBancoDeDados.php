@@ -69,7 +69,7 @@ if ($bdConection->connect_error) {
 // =========================================
 // POVOAMENTO DAS TABELAS
 
-$query = "INSERT into cliente
+$query = "INSERT INTO cliente (ID_Cliente, nome, sexo, cpf)
 VALUES 
 
 ('Plácido David',	'M',	'98363847111'),
@@ -78,7 +78,7 @@ VALUES
 ('Óscar Teobaldo',	'M',	'37683400111'),
 ('Valente Ademar',	'M',	'49360005111');";
 
-$query .= "INSERT INTO forma_pagto
+$query .= "INSERT INTO forma_pagto (ID_Forma_Pagto, Descricao)
 VALUES 
 (1, 'BOLETO'),
 (2, 'CRÉDITO'),
@@ -86,7 +86,7 @@ VALUES
 (4, 'DINHEIRO'),
 (5, 'VALE ALIMENTAÇÃO');";
 
-$query .= "INSERT INTO produto 
+$query .= "INSERT INTO produto ( ID_Produto, VL_Unitario, Descricao, DT_Validade, DT_Fabricacao, Lote, QTD_Estoque, Marca)
 VALUES 
 (1, 15.20, 'produto A', '04/12/2023', '05/02/2021', 1022, 90, 'marca x'),
 (2, 100.00, 'produto B', '08/11/2024', '12/09/2020', 4123, 5, 'marca y'),
@@ -94,7 +94,7 @@ VALUES
 (4, 5.10, 'produto D', '19/07/2025', '14/11/2021', 834, 385, 'marca xx'),
 (5, 17.30, 'produto E', '26/12/2022', '30/08/2021', 1256, 20, 'marca yy');";
 
-$query .= "INSERT INTO compra_produto 
+$query .= "INSERT INTO compra_produto (ID_Compra_Produto, QTD_Comprada, VL_Total_Item, ID_Produto)
 VALUES 
 (1, 100, 510, 4),
 (2, 1, 100, 2),
@@ -117,7 +117,7 @@ VALUES
 (19, 12, 182.4, 1),
 (20, 6, 30.60, 4);";
 
-$query .= "INSERT INTO compra 
+$query .= "INSERT INTO compra (ID_Compra, DT_Compra, VL_Total_Compra, Atendente, ID_Forma_Pagto, ID_Cliente, ID_Compra_Produto)
 VALUES 
 (1, '10/10/2022', 510.00, 'Atendente 1', 1, 1, 1),
 (2, '11/05/2022', 100.00, 'Atendente 2', 3, 2, 2),
@@ -156,6 +156,7 @@ $respostaConexao = $bdConection->query($query);
 //   echo "0 results";
 // }
 
+var_dump($bdConection);
 
 mysqli_close($bdConection);
 ?> 
