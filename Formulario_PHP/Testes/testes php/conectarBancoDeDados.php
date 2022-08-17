@@ -132,8 +132,9 @@ VALUES
 
 // =========================================================
 
+print_r($query);
 
-$respostaConexao = $bdConection->query($query);
+// $respostaConexao = $bdConection->query($query);
 
 // if ($respostaConexao->num_rows > 0) {
 //   echo "Query realizada com sucesso"."<br>";
