@@ -136,40 +136,72 @@ if ($bdConection->connect_error) {
 // (10, '2022/06/19', 153.00, 'Atendente 10', 3, 5, 10);";
 
 // =========================================================
+// Select nas tabelas
+
+$query = "SELECT * FROM cliente";
+
+
+// ==========================================================
 
 // print_r($query);
 
-if ($bdConection->multi_query($query) === TRUE) {
-  echo "New records created successfully";
-} else {
-  echo "Error: " . $query . "<br>" . $bdConection->error;
-}
-
-
-
-// $respostaConexao = $bdConection->query($query);
-
-// if ($respostaConexao->num_rows > 0) {
-//   echo "Query realizada com sucesso"."<br>";
+// if ($bdConection->multi_query($query) === TRUE) {
+//   echo "New records created successfully";
 // } else {
-//   echo "Erro na query: ";
+//   echo "Error: " . $query . "<br>" . $bdConection->error;
 // }
 
-// ============================================================= 
 
-// Mostrar resposta 
+
+$respostaConexao = $bdConection->query($query);
+
+if ($respostaConexao->num_rows > 0) {
+  echo "Query realizada com sucesso"."<br>";
+} else {
+  echo "Erro na query: ";
+}
+
+// ============================================================= 
+// Mostrar respostas
+
 // if ($respostaConexao->num_rows > 0) {
-//   print_r($respostaConexao->fetch_all(MYSQLI_ASSOC));  
-//   // output data of each row
-//   // while($row = mysqli_fetch_assoc($respostaConexao)) {
-//   //   foreach($row as $chave => $valor) {
-//   //     echo $chave."==========".$valor."<br>";
-//   //   }
-//   // }
+
+//   // Mostrar respostas por linhas
+//   while($linha = $respostaConexao->fetch_assoc()) {
+//     echo "id: " . $linha["ID_Cliente"]. " - Nome: " . $linha["nome"]. " - Sexo: " . $linha["sexo"]. " - CPF: " . "<br>";
+//   }
+
 // } else {
 //   echo "0 results";
 // }
 
+if ($respostaConexao->num_rows > 0) {
+  $resultado = "
+  <table>
+    <tr>
+      <th>Nome</th>
+      <th>cpf</th>
+    </tr>
+  ";
+
+  // Mostrar respostas por linhas
+  while($linha = $respostaConexao->fetch_assoc()) {
+    $resultado .= "
+    <tr>
+      <td>${linha['nome']}</td>
+      <td>${linha['cpf']}</td>
+    </tr>
+    ";
+  }
+  $resultado .= "</table>";
+
+} else {
+  echo "0 results";
+}
+echo $resultado;
+
+
+// =====================================================
 var_dump($bdConection);
 
 mysqli_close($bdConection);
