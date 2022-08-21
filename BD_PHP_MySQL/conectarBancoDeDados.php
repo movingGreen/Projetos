@@ -205,4 +205,6 @@ echo $resultado;
 var_dump($bdConection);
 
 mysqli_close($bdConection);
-?> 
+
+// =======================================
+// Apresentar na tela
