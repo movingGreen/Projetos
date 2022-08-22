@@ -1,3 +1,13 @@
+<?php 
+include "ConectarBD.php";
+
+$dadosCliente =  pesquisarTodosDadosTabela("cliente", $bdConection);
+$dadosCompra =  pesquisarTodosDadosTabela("compra", $bdConection);
+$dadosCompraProd =  pesquisarTodosDadosTabela("compra_produto", $bdConection);
+$dadosFormaPagto =  pesquisarTodosDadosTabela("forma_pagto", $bdConection);
+$dadosProduto =  pesquisarTodosDadosTabela("produto", $bdConection);
+?>
+
 <!doctype html>
 <html lang="pt">
   <head>
@@ -16,8 +26,8 @@
       <div class="card">
         <div class="card-body">
           <h4 class="card-title text-center">Tabela Cliente</h4>
-          <table class="table table-striped">
-            <thead>
+          <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
               <tr>
                 <th>ID</th>
                 <th>nome</th>
@@ -27,7 +37,8 @@
             </thead>
             <tbody>
               <tr>
-                <td scope="row"></td>
+                <td scope="row">1</td>
+                <td></td>
               </tr>
               <tr>
                 <td scope="row"></td>
@@ -146,11 +157,11 @@
         </div>
       </div>
       <br>
-      <div class="card card">
+      <div class="card ">
         <div class="card-body">
           <h4 class="card-title text-center">Pesquisas </h4>
           <h5 class="">Compras feitas por cada Cliente</h5>
-          <table class="table table-striped">
+          <table class="table table-striped table-success">
             <thead>
               <tr>
                 <th></th>
@@ -174,7 +185,7 @@
           <br>
           <br>
           <h5 class="">Produtos ordenados por mais comprados</h5>
-            <table class="table table-striped">
+            <table class="table table-striped table-success">
               <thead>
                 <tr>
                   <th></th>
