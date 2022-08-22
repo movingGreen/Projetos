@@ -14,6 +14,20 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+
+-- Copiando estrutura do banco de dados para bd_teste_php
+CREATE DATABASE IF NOT EXISTS `bd_teste_php` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `bd_teste_php`;
+
+-- Copiando estrutura para tabela bd_teste_php.cliente
+CREATE TABLE IF NOT EXISTS `cliente` (
+  `ID_Cliente` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(50) NOT NULL,
+  `sexo` char(1) NOT NULL,
+  `cpf` char(11) NOT NULL,
+  PRIMARY KEY (`ID_Cliente`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
 -- Copiando dados para a tabela bd_teste_php.cliente: 5 rows
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
 INSERT INTO `cliente` (`ID_Cliente`, `nome`, `sexo`, `cpf`) VALUES
@@ -23,6 +37,21 @@ INSERT INTO `cliente` (`ID_Cliente`, `nome`, `sexo`, `cpf`) VALUES
 	(4, 'Ã“scar Teobaldo', 'M', '37683400111'),
 	(5, 'Valente Ademar', 'M', '49360005111');
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
+
+-- Copiando estrutura para tabela bd_teste_php.compra
+CREATE TABLE IF NOT EXISTS `compra` (
+  `ID_Compra` int(11) NOT NULL,
+  `DT_Compra` date NOT NULL,
+  `VL_Total_Compra` decimal(7,2) NOT NULL,
+  `Atendente` varchar(50) NOT NULL,
+  `ID_Forma_Pagto` int(11) NOT NULL,
+  `ID_Cliente` int(11) NOT NULL,
+  `ID_Compra_Produto` int(11) NOT NULL,
+  PRIMARY KEY (`ID_Compra`),
+  KEY `ID_Cliente` (`ID_Cliente`),
+  KEY `ID_Forma_Pagto` (`ID_Forma_Pagto`),
+  KEY `ID_Compra_Produto` (`ID_Compra_Produto`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- Copiando dados para a tabela bd_teste_php.compra: 10 rows
 /*!40000 ALTER TABLE `compra` DISABLE KEYS */;
@@ -38,6 +67,16 @@ INSERT INTO `compra` (`ID_Compra`, `DT_Compra`, `VL_Total_Compra`, `Atendente`, 
 	(9, '2022-10-18', 190.30, 'Atendente 9', 2, 1, 9),
 	(10, '2022-06-19', 153.00, 'Atendente 10', 3, 5, 10);
 /*!40000 ALTER TABLE `compra` ENABLE KEYS */;
+
+-- Copiando estrutura para tabela bd_teste_php.compra_produto
+CREATE TABLE IF NOT EXISTS `compra_produto` (
+  `ID_Compra_Produto` int(11) NOT NULL,
+  `QTD_Comprada` int(11) DEFAULT NULL,
+  `VL_Total_Item` decimal(7,2) DEFAULT NULL,
+  `ID_Produto` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID_Compra_Produto`),
+  KEY `ID_Produto` (`ID_Produto`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- Copiando dados para a tabela bd_teste_php.compra_produto: 20 rows
 /*!40000 ALTER TABLE `compra_produto` DISABLE KEYS */;
@@ -64,6 +103,13 @@ INSERT INTO `compra_produto` (`ID_Compra_Produto`, `QTD_Comprada`, `VL_Total_Ite
 	(20, 6, 30.60, 4);
 /*!40000 ALTER TABLE `compra_produto` ENABLE KEYS */;
 
+-- Copiando estrutura para tabela bd_teste_php.forma_pagto
+CREATE TABLE IF NOT EXISTS `forma_pagto` (
+  `ID_Forma_Pagto` int(11) NOT NULL,
+  `Descricao` varchar(30) NOT NULL,
+  PRIMARY KEY (`ID_Forma_Pagto`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
 -- Copiando dados para a tabela bd_teste_php.forma_pagto: 5 rows
 /*!40000 ALTER TABLE `forma_pagto` DISABLE KEYS */;
 INSERT INTO `forma_pagto` (`ID_Forma_Pagto`, `Descricao`) VALUES
@@ -73,6 +119,19 @@ INSERT INTO `forma_pagto` (`ID_Forma_Pagto`, `Descricao`) VALUES
 	(4, 'DINHEIRO'),
 	(5, 'VALE ALIMENTAÃ‡ÃƒO');
 /*!40000 ALTER TABLE `forma_pagto` ENABLE KEYS */;
+
+-- Copiando estrutura para tabela bd_teste_php.produto
+CREATE TABLE IF NOT EXISTS `produto` (
+  `ID_Produto` int(11) NOT NULL,
+  `VL_Unitario` decimal(5,2) NOT NULL,
+  `Descricao` varchar(50) NOT NULL,
+  `DT_Validade` date NOT NULL,
+  `DT_Fabricacao` date NOT NULL,
+  `Lote` int(11) NOT NULL,
+  `QTD_Estoque` int(11) NOT NULL,
+  `Marca` varchar(30) NOT NULL,
+  PRIMARY KEY (`ID_Produto`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- Copiando dados para a tabela bd_teste_php.produto: 5 rows
 /*!40000 ALTER TABLE `produto` DISABLE KEYS */;
