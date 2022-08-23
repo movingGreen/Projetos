@@ -5,16 +5,15 @@ $password = "";
 $nomeBD = "bd_teste_php";
 
 // Criar conexão
-$bdConection = new mysqli($servername, $username, $password, $nomeBD);
+$conexaoBD = new mysqli($servername, $username, $password, $nomeBD);
 
 // Checar conexão
-if ($bdConection->connect_error) {
-  die("Erro na conexão: " . $bdConection->connect_error);
+if ($conexaoBD->connect_error) {
+  die("Erro na conexão: " . $conexaoBD->connect_error);
 }
 
-
-
-function pesquisarTodosDadosTabela(string $tabela, $conexaoBD) {
+function PesquisarTodosDadosTabela(string $tabela, $conexaoBD) {
+    $tabela = strtolower($tabela);
     $query = "SELECT * FROM $tabela";
     $dadosTabela = $conexaoBD->query($query);
 
