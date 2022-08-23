@@ -29,7 +29,7 @@ $dadosCompra = $conexaoBD->query($queryCompra);
 
 $queryConsulta1 = "
   SELECT 
-    cliente.nome, compra.ID_Compra, compra.DT_Compra, compra.VL_Total_Compra
+    cliente.nome AS Nome, compra.ID_Compra AS 'ID da Compra', compra.DT_Compra AS 'Data da Compra', compra.VL_Total_Compra AS 'Valor Total da Compra'
   FROM 
     compra
     INNER JOIN cliente ON compra.ID_Cliente = cliente.ID_Cliente
@@ -40,6 +40,7 @@ $queryConsulta2 = "
 
 ";
 $dadosConsulta2 = $conexaoBD->query($queryConsulta2);
+
 function TabularDados($respostaQuery){
   if ($respostaQuery->num_rows > 0) {
     $resultado = "";
@@ -49,9 +50,7 @@ function TabularDados($respostaQuery){
       $resultado .= "<tr>";
 
       foreach (array_values($linha) as $valor) {
-        $resultado .= "
-          <td>${valor}</td>
-        ";
+        $resultado .= "<td>${valor}</td>";
       }
 
       $resultado .= "</tr>";
@@ -63,6 +62,51 @@ function TabularDados($respostaQuery){
       </tr>
     ";
   }
+  return $resultado;
+}
+
+function TabularDadosComHeader($respostaQuery){
+  if ($respostaQuery->num_rows > 0) {
+    $resultado = "
+      <thead>
+        <tr>
+    ";
+    $colunas = array_keys( $respostaQuery->fetch_assoc() );
+
+    // Mostrar colunas da resposta
+    foreach ($colunas as $header) {
+      $resultado .= "<th>${header}</th>";
+    }
+
+    $resultado .= "
+        </tr>
+      </thead>
+      <tbody>
+    ";
+
+    // Mostrar respostas por linhas
+    while($linha = $respostaQuery->fetch_assoc()) {
+      $resultado .= "<tr>";
+
+      foreach (array_values($linha) as $valor) {
+        $resultado .= "<td>${valor}</td>";
+      }
+
+      $resultado .= "</tr>";
+    }
+
+    $resultado .= "</tbody>";
+  } else {
+    $resultado = "
+    <thead>
+      <tr></tr>
+    </thead>
+    <tbody>
+      <tr></tr>
+    </tbody>
+    ";
+  }
+  
   return $resultado;
 }
 ?>
@@ -187,16 +231,7 @@ function TabularDados($respostaQuery){
           <h4 class="card-title text-center">Pesquisas </h4>
           <h5 class="">Compras feitas por cada Cliente</h5>
           <table class="table table-striped table-success">
-            <thead>
-              <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <?= TabularDados($dadosConsulta1) ?>
-            </tbody>
+            <?= TabularDadosComHeader($dadosConsulta1) ?>
           </table>
           <br>
           <br>
