@@ -15,8 +15,30 @@ $dadosCompraProd =  $conexaoBD->query($queryCompraProd);
 $queryCompra = "";
 $dadosCompra =  $conexaoBD->query($queryCompra);
 
-function CriarDadosTabela($respostaQuery){
-  
+function TabularDados($respostaQuery){
+  if ($respostaQuery->num_rows > 0) {
+    $resultado = "";
+
+    // Mostrar respostas por linhas
+    while($linha = $respostaQuery->fetch_assoc()) {
+      $resultado .= "<tr>";
+
+      foreach (array_values($linha) as $valor) {
+        $resultado .= "
+          <td>${valor}</td>
+        ";
+      }
+
+      $resultado .= "</tr>";
+    }
+  } else {
+    $resultado = "
+      <tr>
+        <td></td>
+      </tr>
+    ";
+  }
+  return $resultado;
 }
 ?>
 
@@ -49,31 +71,7 @@ function CriarDadosTabela($respostaQuery){
             </thead>
             <tbody>
               <?php
-                if ($dadosCliente->num_rows > 0) {
-                  $resultado = "";
-
-                  // Mostrar respostas por linhas
-                  while($linha = $dadosCliente->fetch_assoc()) {
-                    $resultado .= "
-                      <tr>
-                        <td>${linha['ID_Cliente']}</td>
-                        <td>${linha['nome']}</td>
-                        <td>${linha['sexo']}</td>
-                        <td>${linha['cpf']}</td>
-                      </tr>
-                    ";
-                  }
-                } else {
-                  $resultado = "
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                  ";
-                }
-                echo $resultado;
+                echo TabularDados($dadosCliente);
               ?>
             </tbody>
           </table>
