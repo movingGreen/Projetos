@@ -1,0 +1,9 @@
+SELECT 
+    compra.ID_Compra, compra.DT_Compra, compra.VL_Total_Compra, compra.Atendente,  forma_pagto.Descricao, cliente.nome, produto.Descricao
+  FROM 
+    compra, cliente, forma_pagto, compra_produto, produto
+  WHERE 
+    compra.ID_Forma_Pagto = forma_pagto.ID_Forma_Pagto
+    AND compra.ID_Cliente = cliente.ID_Cliente
+    AND compra.ID_Compra_Produto = compra_produto.ID_Compra_Produto
+    AND compra_produto.ID_Produto = produto.ID_Produto;   

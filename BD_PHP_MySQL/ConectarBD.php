@@ -14,7 +14,7 @@ if ($conexaoBD->connect_error) {
 
 function PesquisarTodosDadosTabela(string $tabela, $conexaoBD) {
     $tabela = strtolower($tabela);
-    $query = "SELECT * FROM $tabela";
+    $query = "SELECT * FROM $tabela;";
     $dadosTabela = $conexaoBD->query($query);
 
     return $dadosTabela;

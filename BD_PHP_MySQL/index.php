@@ -1,20 +1,45 @@
 <?php
 include "ConectarBD.php";
 
-$dadosCliente =  PesquisarTodosDadosTabela("cliente", $conexaoBD);
-$dadosProduto =  PesquisarTodosDadosTabela("produto", $conexaoBD);
-$dadosFormaPagto =  PesquisarTodosDadosTabela("forma_pagto", $conexaoBD);
+$dadosCliente = PesquisarTodosDadosTabela("cliente", $conexaoBD);
+$dadosProduto = PesquisarTodosDadosTabela("produto", $conexaoBD);
+$dadosFormaPagto = PesquisarTodosDadosTabela("forma_pagto", $conexaoBD);
 
 $queryCompraProd = "
-  SELECT compra_produto.ID_Compra_Produto, compra_produto.QTD_Comprada, compra_produto.VL_Total_Item, produto.Descricao
-  FROM compra_produto
-  INNER JOIN produto ON compra_produto.ID_Produto = produto.Descricao
+  SELECT 
+    compra_produto.ID_Compra_Produto, compra_produto.QTD_Comprada, compra_produto.VL_Total_Item, produto.Descricao
+  FROM 
+    compra_produto
+    INNER JOIN produto ON compra_produto.ID_Produto = produto.ID_Produto;
 ";
-$dadosCompraProd =  $conexaoBD->query($queryCompraProd);
+$dadosCompraProd = $conexaoBD->query($queryCompraProd);
 
-$queryCompra = "";
-$dadosCompra =  $conexaoBD->query($queryCompra);
+$queryCompra = "
+  SELECT 
+    compra.ID_Compra, compra.DT_Compra, compra.VL_Total_Compra, compra.Atendente,  forma_pagto.Descricao AS 'Forma de Pagamento', cliente.nome, produto.Descricao
+  FROM 
+    compra, cliente, forma_pagto, compra_produto, produto
+  WHERE 
+    compra.ID_Forma_Pagto = forma_pagto.ID_Forma_Pagto
+    AND compra.ID_Cliente = cliente.ID_Cliente
+    AND compra.ID_Compra_Produto = compra_produto.ID_Compra_Produto
+    AND compra_produto.ID_Produto = produto.ID_Produto;    
+";
+$dadosCompra = $conexaoBD->query($queryCompra);
 
+$queryConsulta1 = "
+  SELECT 
+    cliente.nome, compra.ID_Compra, compra.DT_Compra, compra.VL_Total_Compra
+  FROM 
+    compra
+    INNER JOIN cliente ON compra.ID_Cliente = cliente.ID_Cliente
+";
+$dadosConsulta1 = $conexaoBD->query($queryConsulta1);
+
+$queryConsulta2 = "
+
+";
+$dadosConsulta2 = $conexaoBD->query($queryConsulta2);
 function TabularDados($respostaQuery){
   if ($respostaQuery->num_rows > 0) {
     $resultado = "";
@@ -64,15 +89,13 @@ function TabularDados($respostaQuery){
             <thead class="thead-dark">
               <tr>
                 <th>ID</th>
-                <th>nome</th>
-                <th>sexo</th>
-                <th>cpf</th>
+                <th>Nome</th>
+                <th>Sexo</th>
+                <th>CPF</th>
               </tr>
             </thead>
             <tbody>
-              <?php
-                echo TabularDados($dadosCliente);
-              ?>
+              <?= TabularDados($dadosCliente); ?>
             </tbody>
           </table>
         </div>
@@ -90,45 +113,12 @@ function TabularDados($respostaQuery){
                 <th>Data de Validade</th>
                 <th>Data de Fabricação</th>
                 <th>Lote</th>
-                <th>QTD em Estoque</th>
+                <th>Quantidade em Estoque</th>
                 <th>Marca</th>
               </tr>
             </thead>
             <tbody>
-              <?php
-                if ($dadosProduto->num_rows > 0) {
-                  $resultado = "";
-
-                  while($linha = $dadosProduto->fetch_assoc()) {
-                    $resultado .= "
-                      <tr>
-                        <td>${linha['ID_Produto']}</td>
-                        <td>${linha['VL_Unitario']}</td>
-                        <td>${linha['Descricao']}</td>
-                        <td>${linha['DT_Validade']}</td>
-                        <td>${linha['DT_Fabricacao']}</td>
-                        <td>${linha['Lote']}</td>
-                        <td>${linha['QTD_Estoque']}</td>
-                        <td>${linha['Marca']}</td>
-                      </tr>
-                    ";
-                  }
-                } else {
-                  $resultado = "
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                  ";
-                }
-                echo $resultado;
-              ?>
+              <?= TabularDados($dadosProduto); ?>
             </tbody>
           </table>
         </div>
@@ -145,28 +135,7 @@ function TabularDados($respostaQuery){
               </tr>
             </thead>
             <tbody>
-              <?php
-                if ($dadosFormaPagto->num_rows > 0) {
-                  $resultado = "";
-
-                  while ($linha = $dadosFormaPagto->fetch_assoc()) {
-                    $resultado .= "
-                      <tr>
-                        <td>${linha['ID_Forma_Pagto']}</td>
-                        <td>${linha['Descricao']}</td>
-                      </tr>
-                    ";
-                  }
-                } else {
-                  $resultado = "
-                    <tr>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                  ";
-                }
-                echo $resultado;
-              ?>
+              <?= TabularDados($dadosFormaPagto); ?>
             </tbody>
           </table>
         </div>
@@ -174,7 +143,7 @@ function TabularDados($respostaQuery){
       <br>
       <div class="card">
         <div class="card-body">
-          <h4 class="card-title text-center">Tabela Compra Produto</h4>
+          <h4 class="card-title text-center">Tabela Compra Produto + Nome do Produto</h4>
           <table class="table table-striped table-bordered">
             <thead class="thead-dark">
               <tr>
@@ -185,14 +154,7 @@ function TabularDados($respostaQuery){
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td scope="row"></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td scope="row"></td>
-                <td></td>
-              </tr>
+              <?= TabularDados($dadosCompraProd); ?>
             </tbody>
           </table>
         </div>
@@ -200,7 +162,7 @@ function TabularDados($respostaQuery){
       <br>
       <div class="card">
         <div class="card-body">
-          <h4 class="card-title text-center">Tabela Compra</h4>
+          <h4 class="card-title text-center">Tabela Compra + Dados da Compra</h4>
           <table class="table table-striped table-bordered">
             <thead class="thead-dark">
               <tr>
@@ -208,45 +170,13 @@ function TabularDados($respostaQuery){
                 <th>Data da Compra</th>
                 <th>Valor Total</th>
                 <th>Atendente</th>
-                <th>ID Pagamento</th>
-                <th>ID Cliente</th>
-                <th>ID Compra Prod.</th>
+                <th>Forma de Pagamento</th>
+                <th>Nome do Cliente</th>
+                <th>Produto Comprado</th>
               </tr>
             </thead>
             <tbody>
-              <?php
-                if ($dadosCompra->num_rows > 0) {
-                  $resultado = "";
-
-                  // Mostrar respostas por linhas
-                  while($linha = $dadosCompra->fetch_assoc()) {
-                    $resultado .= "
-                      <tr>
-                        <td>${linha['ID_Compra']}</td>
-                        <td>${linha['DT_Compra']}</td>
-                        <td>${linha['VL_Total_Compra']}</td>
-                        <td>${linha['Atendente']}</td>
-                        <td>${linha['ID_Forma_Pagto']}</td>
-                        <td>${linha['ID_Cliente']}</td>
-                        <td>${linha['ID_Compra_Produto']}</td>
-                      </tr>
-                    ";
-                  }
-                } else {
-                  $resultado = "
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                  ";
-                }
-                echo $resultado;
-              ?>
+              <?= TabularDados($dadosCompra) ?>
             </tbody>
           </table>
         </div>
@@ -265,16 +195,7 @@ function TabularDados($respostaQuery){
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td scope="row"></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td scope="row"></td>
-                <td></td>
-                <td></td>
-              </tr>
+              <?= TabularDados($dadosConsulta1) ?>
             </tbody>
           </table>
           <br>
@@ -303,6 +224,12 @@ function TabularDados($respostaQuery){
             </table>
         </div>
       </div>
+      <br>
+      <h3 class="text-center">DER Conceitual</h3>
+      <img src="CONCEITUAL_Compra_Produto.jpg" class="img-fluid " alt="DER Conceitual da tabela Compra Produto">
+      <br>
+      <h3 class="text-center">DER Logico</h3>
+      <img src="LOGICO_Compra_Produto.jpg" class="img-fluid" alt="DER Logico Tabela Compra Produto">
     </div>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
