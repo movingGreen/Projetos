@@ -249,10 +249,10 @@ function TabularDadosComHeader($respostaQuery){
       </div>
       <br>
       <h3 class="text-center">DER Conceitual</h3>
-      <img src="CONCEITUAL_Compra_Produto.jpg" class="img-fluid " alt="DER Conceitual da tabela Compra Produto">
+      <img src="Imagens/CONCEITUAL_Compra_Produto.jpg" class="img-fluid " alt="DER Conceitual da tabela Compra Produto">
       <br>
       <h3 class="text-center">DER Logico</h3>
-      <img src="LOGICO_Compra_Produto.jpg" class="img-fluid" alt="DER Logico Tabela Compra Produto">
+      <img src="Imagens/LOGICO_Compra_Produto.jpg" class="img-fluid" alt="DER Logico Tabela Compra Produto">
     </div>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
