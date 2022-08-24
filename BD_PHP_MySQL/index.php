@@ -6,38 +6,44 @@ $dadosProduto = PesquisarTodosDadosTabela("produto", $conexaoBD);
 $dadosFormaPagto = PesquisarTodosDadosTabela("forma_pagto", $conexaoBD);
 
 $queryCompraProd = "
-  SELECT 
+  SELECT
     compra_produto.ID_Compra_Produto, compra_produto.QTD_Comprada, compra_produto.VL_Total_Item, produto.Descricao
-  FROM 
+  FROM
     compra_produto
     INNER JOIN produto ON compra_produto.ID_Produto = produto.ID_Produto;
 ";
 $dadosCompraProd = $conexaoBD->query($queryCompraProd);
 
 $queryCompra = "
-  SELECT 
-    compra.ID_Compra, compra.DT_Compra, compra.VL_Total_Compra, compra.Atendente,  forma_pagto.Descricao AS 'Forma de Pagamento', cliente.nome, produto.Descricao
-  FROM 
+  SELECT
+    compra.ID_Compra, compra.DT_Compra, compra.VL_Total_Compra, compra.Atendente,
+    forma_pagto.Descricao AS 'Forma de Pagamento', cliente.nome, produto.Descricao
+  FROM
     compra, cliente, forma_pagto, compra_produto, produto
-  WHERE 
+  WHERE
     compra.ID_Forma_Pagto = forma_pagto.ID_Forma_Pagto
     AND compra.ID_Cliente = cliente.ID_Cliente
     AND compra.ID_Compra_Produto = compra_produto.ID_Compra_Produto
-    AND compra_produto.ID_Produto = produto.ID_Produto;    
+    AND compra_produto.ID_Produto = produto.ID_Produto;
 ";
 $dadosCompra = $conexaoBD->query($queryCompra);
 
 $queryConsulta1 = "
-  SELECT 
-    cliente.nome AS Nome, compra.ID_Compra AS 'ID da Compra', compra.DT_Compra AS 'Data da Compra', compra.VL_Total_Compra AS 'Valor Total da Compra'
-  FROM 
-    compra
-    INNER JOIN cliente ON compra.ID_Cliente = cliente.ID_Cliente
+  SELECT
+    cliente.nome AS Nome, compra.ID_Compra AS 'ID da Compra',
+    compra.DT_Compra AS 'Data da Compra', compra.VL_Total_Compra AS 'Valor Total da Compra'
+  FROM compra
+    INNER JOIN cliente ON compra.ID_Cliente = cliente.ID_Cliente;
 ";
 $dadosConsulta1 = $conexaoBD->query($queryConsulta1);
 
 $queryConsulta2 = "
-
+  SELECT
+    produto.Descricao AS 'Nome do Produto', COUNT(compra_produto.ID_Compra_Produto) AS 'Quantidade de Compras'
+  FROM produto
+    INNER JOIN compra_produto ON compra_produto.ID_Produto = produto.ID_Produto
+  GROUP BY produto.Descricao
+  ORDER BY COUNT(compra_produto.ID_Compra_Produto) DESC;
 ";
 $dadosConsulta2 = $conexaoBD->query($queryConsulta2);
 
@@ -106,7 +112,7 @@ function TabularDadosComHeader($respostaQuery){
     </tbody>
     ";
   }
-  
+
   return $resultado;
 }
 ?>
@@ -220,7 +226,7 @@ function TabularDadosComHeader($respostaQuery){
               </tr>
             </thead>
             <tbody>
-              <?= TabularDados($dadosCompra) ?>
+              <?= TabularDados($dadosCompra); ?>
             </tbody>
           </table>
         </div>
@@ -231,31 +237,13 @@ function TabularDadosComHeader($respostaQuery){
           <h4 class="card-title text-center">Pesquisas </h4>
           <h5 class="">Compras feitas por cada Cliente</h5>
           <table class="table table-striped table-success">
-            <?= TabularDadosComHeader($dadosConsulta1) ?>
+            <?= TabularDadosComHeader($dadosConsulta1); ?>
           </table>
           <br>
           <br>
           <h5 class="">Produtos ordenados por mais comprados</h5>
             <table class="table table-striped table-success">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td scope="row"></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td scope="row"></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-              </tbody>
+              <?= TabularDadosComHeader($dadosConsulta2); ?>
             </table>
         </div>
       </div>
