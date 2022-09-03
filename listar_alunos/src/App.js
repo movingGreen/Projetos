@@ -1,37 +1,68 @@
-import React from "react";
+import React, {useState} from "react";
 
-function App() {
+export default function App() {
+  const [Alunos, setAlunos] = useState([])
+
+  // const salvaAluno = () => {
+  //   setAlunos(
+  //     stateAnterior => {
+  //       return {}
+  //     }
+  //   );
+  // }
+
+  const tratarSubmit = (event) => {
+    event.preventDefault();
+    alert("Você salvou um aluno!");
+  }
+
   return (
     <div>
-      <h1>Listar alunos.</h1>
-      <form>
-        <label htmlFor="nome">Nome do aluno:</label>
+      <h1>Salvar alunos</h1>
+      <form onSubmit={tratarSubmit}>
+        <label>Nome do aluno:
           <input 
-            type="text" 
-            id="nome"
+            type="text"
             name="nome" 
           />
-        <label htmlFor="curso">Nome do curso:</label>
+        </label>
+        <br/>
+        <br/>
+        <label>Nome do curso:
           <input 
-            type="text" 
-            id="curso"
+            type="text"
             name="curso" 
           />
-        <label htmlFor="periodo">Período:</label>
+        </label>
+        <br/>
+        <br/>
+        <label>Período:
           <input 
-            type="text" 
-            id="periodo"
+            type="text"
             name="periodo" 
           />
-        <label htmlFor="disciplina">Disciplina:</label>
+        </label>
+        <br/>
+        <br/>
+        <label>Disciplina:
           <input 
-            type="text" 
-            id="disciplina"
+            type="text"
             name="disciplina" 
           />
+        </label>
+        <br/>
+        <br/>
+        <input type="submit">
+          Salvar
+        </input>
       </form>
+      <br/>
+      <hr/>
+      <h2>Lista de alunos</h2>
+      <br/>
+      <ul>
+
+      </ul>
     </div>
   );
 }
-
-export default App;
