@@ -1,17 +1,17 @@
 import React, {useState} from "react";
 
 export default function App() {
-  const [Alunos, setAlunos] = useState([])
+  const [Alunos, setAlunos] = useState([]);
 
-  // const salvaAluno = () => {
-  //   setAlunos(
-  //     stateAnterior => {
-  //       return {}
-  //     }
-  //   );
-  // }
+  const salvaAluno = () => {
+    setAlunos(
+      stateAnterior => {
+        return {}
+      }
+    );
+  }
 
-  const tratarSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     alert("Você salvou um aluno!");
   }
@@ -19,9 +19,9 @@ export default function App() {
   return (
     <div>
       <h1>Salvar alunos</h1>
-      <form onSubmit={tratarSubmit}>
+      <form onSubmit={handleSubmit}>
         <label>Nome do aluno:
-          <input 
+          <input
             type="text"
             name="nome" 
           />
