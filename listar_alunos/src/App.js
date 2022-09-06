@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function App() {
+  const [aluno, setAluno] = useState([]);
+
+  const salvarAluno = (event) => {
+    event.preventDefault();
+    alert(`Voce salvou um aluno `);
+    let alunos = [...aluno];
+    alunos.push({ aluno: 123 });
+    setAluno();
+  };
+
   return (
     <div>
       <h1>Salvar alunos</h1>
-      <form>
+      <form onSubmit={salvarAluno}>
         <label>
           Nome
           <input
@@ -26,6 +36,8 @@ export default function App() {
           <input
             type="number"
             name="semestre"
+            min="1"
+            max="10"
           />
         </label>
         <br />
