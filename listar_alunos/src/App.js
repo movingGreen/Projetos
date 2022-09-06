@@ -1,14 +1,12 @@
 import React, { useState } from "react";
+import AlunoLista from "./AlunoLista";
 
 export default function App() {
   const [aluno, setAluno] = useState([]);
 
   const salvarAluno = (event) => {
     event.preventDefault();
-    alert(`Voce salvou um aluno `);
-    let alunos = [...aluno];
-    alunos.push({ aluno: 123 });
-    setAluno();
+    console.log(event.target[0].value);
   };
 
   return (
