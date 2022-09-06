@@ -7,6 +7,13 @@ export default function App() {
   const salvarAluno = (event) => {
     event.preventDefault();
     console.log(event.target[0].value);
+
+    let inputs = event.target;
+
+    for (let i = 0; i < 4; i++) {
+      const dados = inputs[i];
+      console.log(`${dados.name} - ${dados.value}`);
+    }
   };
 
   return (
