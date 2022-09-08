@@ -1,19 +1,33 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import AlunoLista from "./AlunoLista";
 
 export default function App() {
-  const [aluno, setAluno] = useState([]);
+  const [alunos, setAluno] = useState([]);
+
+  const mostrarState = () => {
+    console.log(alunos);
+  };
 
   const salvarAluno = (event) => {
     event.preventDefault();
     console.log(event.target[0].value);
-
     let inputs = event.target;
+    let aluno = {};
 
     for (let i = 0; i < 4; i++) {
       const dados = inputs[i];
-      console.log(`${dados.name} - ${dados.value}`);
+      // console.log(`${dados.name} - ${dados.value}`);
+      aluno[dados.name] = dados.value;
     }
+
+    console.log("antes do state", aluno);
+
+    setAluno((stateAnterior) => {
+      return [...stateAnterior, aluno];
+    });
+
+    console.log("================State=========");
+    console.log(alunos);
   };
 
   return (
@@ -59,7 +73,12 @@ export default function App() {
         />
       </form>
       <hr />
-      <ul></ul>
+      <button onClick={mostrarState}>Mostrar State</button>
+      <ul>
+        {alunos.map((aluno) => (
+          <AlunoLista aluno={aluno} />
+        ))}
+      </ul>
     </div>
   );
 }
