@@ -1,10 +1,15 @@
 import React from "react";
 
-export default function AlunoLista({ nome, curso, semestre, disciplina }) {
+export default function AlunoLista(props) {
+  const { id, nome, curso, semestre, disciplina } = props.aluno;
+
   return (
     <li>
-      {nome} do curso {curso} no semestre {semestre} fazendo a disciplina{" "}
-      {disciplina}
+      <p>
+        {nome} do curso {curso} no {semestre}° semestre fazendo a disciplina{" "}
+        {disciplina}.&nbsp;
+        <button onClick={props.excluirAluno(id)}>Excluir</button>
+      </p>
     </li>
   );
 }

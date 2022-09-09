@@ -8,26 +8,25 @@ export default function App() {
     console.log(alunos);
   };
 
+  const excluirAluno = (idAluno) => {
+    console.log("excluir aluno " + idAluno);
+  };
+
   const salvarAluno = (event) => {
+    // PARA FAZER!!
+    // criar id unico, permitir exclusão do aluno e salvar no localhost
     event.preventDefault();
-    console.log(event.target[0].value);
-    let inputs = event.target;
-    let aluno = {};
+    let aluno = { id: 1 };
 
     for (let i = 0; i < 4; i++) {
-      const dados = inputs[i];
-      // console.log(`${dados.name} - ${dados.value}`);
+      const dados = event.target[i];
       aluno[dados.name] = dados.value;
+      event.target[i].value = "";
     }
-
-    console.log("antes do state", aluno);
 
     setAluno((stateAnterior) => {
       return [...stateAnterior, aluno];
     });
-
-    console.log("================State=========");
-    console.log(alunos);
   };
 
   return (
@@ -76,7 +75,11 @@ export default function App() {
       <button onClick={mostrarState}>Mostrar State</button>
       <ul>
         {alunos.map((aluno) => (
-          <AlunoLista aluno={aluno} />
+          <AlunoLista
+            key={aluno.id}
+            aluno={aluno}
+            excluirAluno={excluirAluno}
+          />
         ))}
       </ul>
     </div>
