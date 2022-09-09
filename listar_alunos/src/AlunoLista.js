@@ -8,7 +8,7 @@ export default function AlunoLista(props) {
       <p>
         {nome} do curso {curso} no {semestre}° semestre fazendo a disciplina{" "}
         {disciplina}.&nbsp;
-        <button onClick={props.excluirAluno(id)}>Excluir</button>
+        <button onClick={props.funcExcluirAluno(id)}>Excluir</button>
       </p>
     </li>
   );

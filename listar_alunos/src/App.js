@@ -3,6 +3,7 @@ import AlunoLista from "./AlunoLista";
 
 export default function App() {
   const [alunos, setAluno] = useState([]);
+  let contador = 1;
 
   const mostrarState = () => {
     console.log(alunos);
@@ -16,7 +17,7 @@ export default function App() {
     // PARA FAZER!!
     // criar id unico, permitir exclusão do aluno e salvar no localhost
     event.preventDefault();
-    let aluno = { id: 1 };
+    let aluno = { id: contador };
 
     for (let i = 0; i < 4; i++) {
       const dados = event.target[i];
@@ -27,6 +28,7 @@ export default function App() {
     setAluno((stateAnterior) => {
       return [...stateAnterior, aluno];
     });
+    contador++;
   };
 
   return (
@@ -78,7 +80,7 @@ export default function App() {
           <AlunoLista
             key={aluno.id}
             aluno={aluno}
-            excluirAluno={excluirAluno}
+            funcExcluirAluno={excluirAluno}
           />
         ))}
       </ul>
