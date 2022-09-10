@@ -1,23 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AlunoLista from "./AlunoLista";
 
 export default function App() {
   const [alunos, setAluno] = useState([]);
-  let contador = 1;
+  const CHAVE_LOCAL_STORAGE = "ListaDeAlunos";
 
-  const mostrarState = () => {
-    console.log(alunos);
-  };
+  useEffect(() => {
+    const alunosSalvos = JSON.parse(localStorage.getItem(CHAVE_LOCAL_STORAGE));
+    if (alunosSalvos) setAluno(alunosSalvos);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(CHAVE_LOCAL_STORAGE, JSON.stringify(alunos));
+  }, [alunos]);
 
   const excluirAluno = (idAluno) => {
-    console.log("excluir aluno " + idAluno);
+    const listaAlunos = alunos;
+    const novaListaAlunos = listaAlunos.filter((aluno) => aluno.id !== idAluno);
+    setAluno(novaListaAlunos);
   };
 
   const salvarAluno = (event) => {
-    // PARA FAZER!!
-    // criar id unico, permitir exclusão do aluno e salvar no localhost
     event.preventDefault();
-    let aluno = { id: contador };
+    let aluno = { id: Math.random() };
 
     for (let i = 0; i < 4; i++) {
       const dados = event.target[i];
@@ -28,7 +33,6 @@ export default function App() {
     setAluno((stateAnterior) => {
       return [...stateAnterior, aluno];
     });
-    contador++;
   };
 
   return (
@@ -40,6 +44,7 @@ export default function App() {
           <input
             type="text"
             name="nome"
+            required
           />
         </label>
         <br />
@@ -48,6 +53,7 @@ export default function App() {
           <input
             type="text"
             name="curso"
+            required
           />
         </label>
         <br />
@@ -58,6 +64,7 @@ export default function App() {
             name="semestre"
             min="1"
             max="10"
+            required
           />
         </label>
         <br />
@@ -66,6 +73,7 @@ export default function App() {
           <input
             type="text"
             name="disciplina"
+            required
           />
         </label>
         <input
@@ -74,16 +82,15 @@ export default function App() {
         />
       </form>
       <hr />
-      <button onClick={mostrarState}>Mostrar State</button>
-      <ul>
+      <ol>
         {alunos.map((aluno) => (
           <AlunoLista
             key={aluno.id}
             aluno={aluno}
-            funcExcluirAluno={excluirAluno}
+            excluirAluno={excluirAluno}
           />
         ))}
-      </ul>
+      </ol>
     </div>
   );
 }
