@@ -1,6 +1,6 @@
 # Projetos
 
-listar_alunos - Projeto de estudo de React usando métodos novos do JavaScript ES6 junto com react hooks como state para salvar no localhost e apresentar uma lista de alunos.  
+listar_alunos - Projeto de estudo CRUD React usando funcionalidades do JavaScript ES6 junto com hooks e salvar no localhost para salvar e apresentar uma lista de alunos.  
 
 BD_PHP_MySQL - Projeto para aprender como controlar um banco de dados pelo PHP e apresentar eles usando o Bootstrap, para facilitar a conexão usei o MySQL.
 
