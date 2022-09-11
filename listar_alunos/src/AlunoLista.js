@@ -3,8 +3,8 @@ import React from "react";
 export default function AlunoLista(props) {
   const { id, nome, curso, semestre, disciplina } = props.aluno;
 
-  const btnExcluir = () => {
-    props.excluirAluno(id);
+  const btnEditar = () => {
+    props.editarAluno(id);
   };
 
   return (
@@ -12,7 +12,7 @@ export default function AlunoLista(props) {
       <p>
         {nome} do curso {curso} no {semestre}° semestre fazendo a disciplina{" "}
         {disciplina}.&nbsp;
-        <button onClick={btnExcluir}>Excluir</button>
+        <button onClick={btnEditar}>Editar</button>
       </p>
     </li>
   );

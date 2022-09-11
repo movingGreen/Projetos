@@ -1,8 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import AlunoLista from "./AlunoLista";
 
 export default function App() {
   const [alunos, setAluno] = useState([]);
+  const inputName = useRef();
+  const inputCurso = useRef();
+  const inputSemestre = useRef();
+  const inputDisciplina = useRef();
   const CHAVE_LOCAL_STORAGE = "ListaDeAlunos";
 
   useEffect(() => {
@@ -14,9 +18,21 @@ export default function App() {
     localStorage.setItem(CHAVE_LOCAL_STORAGE, JSON.stringify(alunos));
   }, [alunos]);
 
-  const excluirAluno = (idAluno) => {
+  const editarAluno = (idAluno) => {
     const listaAlunos = alunos;
-    const novaListaAlunos = listaAlunos.filter((aluno) => aluno.id !== idAluno);
+    const novaListaAlunos = [];
+
+    for (const aluno of listaAlunos) {
+      if (aluno.id === idAluno) {
+        inputName.current.value = aluno.nome;
+        inputCurso.current.value = aluno.curso;
+        inputSemestre.current.value = aluno.semestre;
+        inputDisciplina.current.value = aluno.disciplina;
+        continue;
+      }
+      novaListaAlunos.push(aluno);
+    }
+
     setAluno(novaListaAlunos);
   };
 
@@ -37,13 +53,16 @@ export default function App() {
 
   return (
     <div>
-      <h1>Salvar alunos</h1>
-      <form onSubmit={salvarAluno}>
+      <h1 className="text-center">Salvar alunos</h1>
+      <form
+        onSubmit={salvarAluno}
+        className="text-center">
         <label>
           Nome
           <input
             type="text"
             name="nome"
+            ref={inputName}
             required
           />
         </label>
@@ -53,6 +72,7 @@ export default function App() {
           <input
             type="text"
             name="curso"
+            ref={inputCurso}
             required
           />
         </label>
@@ -64,6 +84,7 @@ export default function App() {
             name="semestre"
             min="1"
             max="10"
+            ref={inputSemestre}
             required
           />
         </label>
@@ -73,9 +94,11 @@ export default function App() {
           <input
             type="text"
             name="disciplina"
+            ref={inputDisciplina}
             required
           />
         </label>
+        <br />
         <input
           type="submit"
           value="Salvar"
@@ -87,7 +110,7 @@ export default function App() {
           <AlunoLista
             key={aluno.id}
             aluno={aluno}
-            excluirAluno={excluirAluno}
+            editarAluno={editarAluno}
           />
         ))}
       </ol>
