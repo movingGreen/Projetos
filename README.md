@@ -1,5 +1,7 @@
 # Projetos
 
+listar_alunos - Projeto de estudo de React usando métodos novos do JavaScript ES6 junto com react hooks como state para salvar no localhost e apresentar uma lista de alunos.  
+
 BD_PHP_MySQL - Projeto para aprender como controlar um banco de dados pelo PHP e apresentar eles usando o Bootstrap, para facilitar a conexão usei o MySQL.
 
 Armazenador de links - Projeto do tutorial de javascript vannila com o uso das api do Google Chrome para pegar o link atual e salvar no localhost.
