@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import AlunoLista from "./AlunoLista";
 
 export default function App() {
-  const [alunos, setAluno] = useState([]);
+  const [alunos, setAlunos] = useState([]);
   const inputName = useRef();
   const inputCurso = useRef();
   const inputSemestre = useRef();
@@ -11,12 +11,19 @@ export default function App() {
 
   useEffect(() => {
     const alunosSalvos = JSON.parse(localStorage.getItem(CHAVE_LOCAL_STORAGE));
-    if (alunosSalvos) setAluno(alunosSalvos);
+    if (alunosSalvos) setAlunos(alunosSalvos);
   }, []);
 
   useEffect(() => {
     localStorage.setItem(CHAVE_LOCAL_STORAGE, JSON.stringify(alunos));
   }, [alunos]);
+
+  const excluirAluno = (idAluno) => {
+    const novaListaAlunos = alunos.filter((aluno) => {
+      if (aluno.id !== idAluno) return aluno;
+    });
+    setAlunos(novaListaAlunos);
+  };
 
   const editarAluno = (idAluno) => {
     const listaAlunos = alunos;
@@ -33,7 +40,7 @@ export default function App() {
       novaListaAlunos.push(aluno);
     }
 
-    setAluno(novaListaAlunos);
+    setAlunos(novaListaAlunos);
   };
 
   const salvarAluno = (event) => {
@@ -46,7 +53,7 @@ export default function App() {
       event.target[i].value = "";
     }
 
-    setAluno((stateAnterior) => {
+    setAlunos((stateAnterior) => {
       return [...stateAnterior, aluno];
     });
   };
@@ -111,6 +118,7 @@ export default function App() {
             key={aluno.id}
             aluno={aluno}
             editarAluno={editarAluno}
+            excluirAluno={excluirAluno}
           />
         ))}
       </ol>
