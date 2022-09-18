@@ -1,17 +1,7 @@
 import React from "react";
-import useFetch from "./useFetch";
 
 function App() {
-  const [dados] = useFetch("https://www.fruityvice.com/api/fruit/all");
-
-  return (
-    <div className="App">
-      {dados &&
-        dados.map((item, index) => {
-          return <p key={index}>{JSON.stringify(item)}</p>;
-        })}
-    </div>
-  );
+  return <div className="App"></div>;
 }
 
 export default App;
