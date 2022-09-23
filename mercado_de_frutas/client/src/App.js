@@ -14,9 +14,9 @@ function App() {
   return (
     <>
       <ul>
-        {/* {listaDeFrutas.map((fruta) => {
-          return <li>{fruta}</li>;
-        })} */}
+        {listaDeFrutas.map((fruta) => {
+          return <li>{fruta.name}</li>;
+        })}
       </ul>
     </>
   );
