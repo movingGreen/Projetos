@@ -6,7 +6,9 @@ const https = require("https");
 app.use(cors());
 app.use(express.json());
 
-app.get("/listaFrutas", (req, res) => {
+app.get("/listaDeFrutas", (req, res) => {
+  let dados = "";
+
   const apiListaFrutas = https.get(
     "https://www.fruityvice.com/api/fruit/all",
     (resposta) => {
@@ -16,8 +18,7 @@ app.get("/listaFrutas", (req, res) => {
         dados += parte;
       });
       resposta.on("end", () => {
-        // const parseDados = JSON.parse(dados);
-        // console.log(dados);
+        res.send(dados);
       });
     }
   );
