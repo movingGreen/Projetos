@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import Axios from "axios";
-import "./MercadoDeFrutas";
-import MercadoDeFrutas from "./MercadoDeFrutas";
+import CardFrutas from "../Componentes/CardFrutas";
 
-function App() {
+export default function MercadoDeFrutas() {
   const [listaDeFrutas, setlistaDeFrutas] = useState([]);
 
   useEffect(() => {
@@ -20,7 +19,7 @@ function App() {
       <div className="row row-cols-5">
         {listaDeFrutas.map((fruta) => {
           return (
-            <MercadoDeFrutas
+            <CardFrutas
               key={fruta.id}
               fruta={fruta}
             />
@@ -30,5 +29,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
