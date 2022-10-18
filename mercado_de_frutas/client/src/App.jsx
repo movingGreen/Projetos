@@ -6,7 +6,7 @@ import MercadoDeFrutas from "./paginas/MercadoDeFrutas";
 import Navegador from "./paginas/Navegador";
 import PaginaErro from "./paginas/PaginaErro";
 
-export const Roteador = createBrowserRouter([
+const Roteador = createBrowserRouter([
   {
     path: "/",
     element: <Navegador />,
@@ -35,3 +35,5 @@ export const Roteador = createBrowserRouter([
     ],
   },
 ]);
+
+export default Roteador;
