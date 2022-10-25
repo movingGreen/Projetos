@@ -1,5 +1,5 @@
 import React from "react";
-import { createBrowserRouter, Route } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import Carrinho from "./paginas/Carrinho";
 import InformacaoFruta from "./paginas/InformacaoFruta";
 import MercadoDeFrutas from "./paginas/MercadoDeFrutas";
