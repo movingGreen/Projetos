@@ -1,39 +1,33 @@
 import React from "react";
-import { createBrowserRouter } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Carrinho from "./paginas/Carrinho";
 import InformacaoFruta from "./paginas/InformacaoFruta";
 import MercadoDeFrutas from "./paginas/MercadoDeFrutas";
 import Navegador from "./Componentes/Navegador";
 import PaginaErro from "./paginas/PaginaErro";
 
-const Roteador = createBrowserRouter([
-  {
-    path: "/",
-    element: <Navegador />,
-    errorElement: <PaginaErro />,
-    // loader: rootLoader,
-    // action: rootAction,
-    children: [
-      {
-        errorElement: <PaginaErro />,
-        children: [
-          { index: true, element: <MercadoDeFrutas /> },
-          {
-            path: "Informacoes",
-            element: <InformacaoFruta />,
-            // loader: contactLoader,
-            // action: contactAction,
-          },
-          {
-            path: "Carrinho",
-            element: <Carrinho />,
-            // loader: contactLoader,
-            // action: editAction,
-          },
-        ],
-      },
-    ],
-  },
-]);
+export default function App() {
+  const carrinho = React.useState(899);
 
-export default Roteador;
+  return (
+    <>
+      <Navegador />
+      <div className="container">
+        <Routes>
+          <Route
+            path="/"
+            element={<MercadoDeFrutas />}
+          />
+          <Route
+            path="/Informacoes"
+            element={<InformacaoFruta />}
+          />
+          <Route
+            path="/Carrinho"
+            element={<Carrinho carrinho={carrinho} />}
+          />
+        </Routes>
+      </div>
+    </>
+  );
+}

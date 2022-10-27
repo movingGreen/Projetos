@@ -1,14 +1,15 @@
-import { React, useState } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
-import { RouterProvider } from "react-router-dom";
-import Roteador from "./App";
+import { BrowserRouter } from "react-router-dom";
+import App from "./App";
+import "./styles.css";
 
 function ComponenteRoot() {
-  const [carrinho, setCarrinho] = useState(5);
-
   return (
     <React.StrictMode>
-      <RouterProvider router={Roteador} />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </React.StrictMode>
   );
 }
