@@ -1,5 +1,7 @@
 import React from "react";
 
 export default function InformacaoFruta() {
-  return <div>InformacaoFruta</div>;
+  const frutaId = window.url;
+
+  return <div>InformacaoFruta id da fruta = {frutaId}</div>;
 }
