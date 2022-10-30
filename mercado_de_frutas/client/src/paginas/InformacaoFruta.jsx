@@ -1,7 +1,8 @@
 import React from "react";
+import { useSearchParams } from "react-router-dom";
 
 export default function InformacaoFruta() {
-  const frutaId = window.url;
-
-  return <div>InformacaoFruta id da fruta = {frutaId}</div>;
+  const [fruta] = useSearchParams();
+  console.log(fruta);
+  return <div>InformacaoFruta id da fruta = {fruta.get("fruta")}</div>;
 }

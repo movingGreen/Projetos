@@ -7,8 +7,6 @@ import Navegador from "./Componentes/Navegador";
 import PaginaErro from "./paginas/PaginaErro";
 
 export default function App() {
-  const carrinho = React.useState(899);
-
   return (
     <>
       <Navegador />
@@ -24,7 +22,7 @@ export default function App() {
           />
           <Route
             path="/Carrinho"
-            element={<Carrinho carrinho={carrinho} />}
+            element={<Carrinho />}
           />
         </Routes>
       </div>
