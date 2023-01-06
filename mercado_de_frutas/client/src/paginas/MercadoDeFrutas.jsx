@@ -16,14 +16,11 @@ export default function MercadoDeFrutas() {
     } else {
       Axios.get("http://localhost:3001/listaDeFrutas").then((response) => {
         setlistaDeFrutas(response.data);
+        localStorage.setItem(CHAVE_LISTA_FRUTAS, JSON.stringify(response.data));
         console.log(listaDeFrutas);
       });
     }
   }, []);
-
-  useEffect(() => {
-    localStorage.setItem(CHAVE_LISTA_FRUTAS, JSON.stringify(listaDeFrutas));
-  }, [listaDeFrutas]);
 
   return (
     <div className="container text-center">
